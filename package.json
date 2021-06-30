@@ -6,6 +6,7 @@
 	"private": true,
 	"license": "UNLICENSED",
 	"scripts": {
+		"postinstall": "husky install",
 		"prebuild": "rimraf dist",
 		"build": "nest build",
 		"format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
@@ -66,5 +67,16 @@
 		],
 		"coverageDirectory": "../coverage",
 		"testEnvironment": "node"
+	},
+	"husky": {
+		"hooks": {
+			"pre-commit": "lint-staged && git add ."
+		}
+	},
+	"lint-staged": {
+		"*.{js,jsx,ts,tsx,json,css,scss,md}": [
+			"prettier --write",
+			"eslint \"{src,apps,libs,test}/**/*.ts\" --fix"
+		]
 	}
 }
