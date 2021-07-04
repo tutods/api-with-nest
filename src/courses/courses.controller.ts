@@ -9,6 +9,8 @@ import {
 	Res
 } from '@nestjs/common';
 import { CoursesService } from './courses.service';
+import { CreateCourseDto } from './dto/create-course.dto';
+import { UpdateCourseDto } from './dto/update-course.dto';
 
 @Controller('courses')
 export class CoursesController {
@@ -36,8 +38,8 @@ export class CoursesController {
 	}
 
 	@Post()
-	create(@Body() body, @Res() response) {
-		this.coursesService.create(body);
+	create(@Body() createCourseDto: CreateCourseDto, @Res() response) {
+		this.coursesService.create(createCourseDto);
 
 		return response.status(201).json({
 			message: 'Course added with success!'
@@ -45,8 +47,12 @@ export class CoursesController {
 	}
 
 	@Patch(':id')
-	findOneAndUpdate(@Body() body, @Param('id') id: string, @Res() response) {
-		this.coursesService.update(id, body);
+	findOneAndUpdate(
+		@Body() updateCourseDto: UpdateCourseDto,
+		@Param('id') id: string,
+		@Res() response
+	) {
+		this.coursesService.update(id, updateCourseDto);
 
 		return response.status(200).json({
 			message: `Course with id ${id} updated with success!`
