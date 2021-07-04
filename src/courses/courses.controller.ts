@@ -8,43 +8,57 @@ import {
 	Post,
 	Res
 } from '@nestjs/common';
+import { CoursesService } from './courses.service';
 
 @Controller('courses')
 export class CoursesController {
+	constructor(private readonly coursesService: CoursesService) {}
+
 	@Get()
-	findAll(@Res() response) {
-		return response.status(200).send({
-			courses: []
-		});
+	findAll() {
+		return this.coursesService.findAll();
 	}
 
 	@Get(':id')
-	findOne(@Param('id') id: string) {
-		return {
-			course: id
-		};
+	findOne(@Param('id') id: string, @Res() response) {
+		const results = this.coursesService.findOne(id);
+
+		if (!results) {
+			return response.status(404).json({
+				status: 404,
+				message: `Course with id ${id} not found!`
+			});
+		}
+
+		return response.status(200).json({
+			course: results
+		});
 	}
 
 	@Post()
-	create(@Body() body) {
-		return {
-			data: body
-		};
+	create(@Body() body, @Res() response) {
+		this.coursesService.create(body);
+
+		return response.status(201).json({
+			message: 'Course added with success!'
+		});
 	}
 
 	@Patch(':id')
-	findOneAndUpdate(@Body() body, @Param('id') id: string) {
-		return {
-			id,
-			data: body
-		};
+	findOneAndUpdate(@Body() body, @Param('id') id: string, @Res() response) {
+		this.coursesService.update(id, body);
+
+		return response.status(200).json({
+			message: `Course with id ${id} updated with success!`
+		});
 	}
 
 	@Delete(':id')
-	findOneAndDelete(@Param('id') id: string) {
-		return {
-			id,
-			message: `${id} removed!`
-		};
+	findOneAndDelete(@Param('id') id: string, @Res() response) {
+		this.coursesService.remove(id);
+
+		return response.status(200).json({
+			message: `Course with id ${id} removed with success!`
+		});
 	}
 }
