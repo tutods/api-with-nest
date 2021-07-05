@@ -8,11 +8,13 @@ import { CoursesModule } from './courses/courses.module';
 
 @Module({
 	imports: [
-		ConfigModule.forRoot(),
+		// Load Config. Module
+		ConfigModule.forRoot({ isGlobal: true }),
 
 		// Configuration of TypeORM
 		TypeOrmModule.forRootAsync(typeOrmConfigAsync),
 
+		// Courses Module
 		CoursesModule
 	],
 	controllers: [AppController],

@@ -21,7 +21,9 @@ export default class TypeOrmConfig {
 
 			entities: [`${__dirname}/../**/entities/*.entity{.ts,.js}`],
 
-			synchronize: true
+			synchronize: true,
+
+			autoLoadEntities: true
 
 			// logging: true
 		};

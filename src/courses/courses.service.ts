@@ -1,27 +1,27 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreateCourseDto } from './dto/create-course.dto';
 import { Course } from './entities/course.entity';
 
 @Injectable()
 export class CoursesService {
-	private courses: Course[] = [
-		{
-			id: '669194d',
-			name: 'ReactJS: do básico ao expert',
-			description: 'Aprenda React desde da base.',
-			tags: ['react', 'typescript', 'vscode', 'front-end']
-		}
-	];
+	constructor(
+		@InjectRepository(Course)
+		private repository: Repository<Course>
+	) {}
 
-	findAll() {
+	async findAll() {
+		const results = await this.repository.find();
+
 		return {
-			numberOfCourses: this.courses.length,
-			courses: this.courses
+			numberOfCourses: results.length,
+			courses: results
 		};
 	}
 
-	findOne(id: string) {
-		const course = this.courses.find((course) => course.id === id);
+	async findOne(id: string) {
+		const course = await this.repository.findOne(id);
 
 		if (!course) {
 			throw new HttpException(
@@ -33,30 +33,55 @@ export class CoursesService {
 		return course;
 	}
 
-	create(createCourseDto: CreateCourseDto) {
-		this.courses.push(createCourseDto);
-		return createCourseDto;
-	}
+	async create(createCourseDto: CreateCourseDto) {
+		const course = this.repository.create(createCourseDto);
 
-	update(id: string, updateCourseDto: any) {
-		const foundedCourse = this.courses.findIndex(
-			(course) => course.id === id
-		);
-
-		this.courses[foundedCourse] = updateCourseDto;
-
-		return updateCourseDto;
-	}
-
-	remove(id: string) {
-		const foundedCourse = this.courses.findIndex(
-			(course) => course.id === id
-		);
-
-		if (foundedCourse === -1) {
-			return;
+		try {
+			await this.repository.save(course);
+		} catch (error) {
+			throw new HttpException(
+				'Error creating a new course!',
+				HttpStatus.BAD_REQUEST
+			);
 		}
 
-		this.courses.splice(foundedCourse);
+		return course;
+	}
+
+	async update(id: string, updateCourseDto: any) {
+		const course = await this.repository.findOne(id);
+
+		if (!course) {
+			throw new HttpException(
+				`Course with id ${id} not found`,
+				HttpStatus.NOT_FOUND
+			);
+		}
+
+		try {
+			await this.repository.update({ id }, updateCourseDto);
+		} catch (error) {
+			throw new HttpException(
+				`Error updating course with id ${id}!`,
+				HttpStatus.BAD_REQUEST
+			);
+		}
+
+		return course;
+	}
+
+	async remove(id: string) {
+		const course = await this.repository.findOne(id);
+
+		if (!course) {
+			throw new HttpException(
+				`Course with id ${id} not exists!`,
+				HttpStatus.NOT_FOUND
+			);
+		}
+
+		await this.repository.remove(course);
+
+		return HttpStatus.NO_CONTENT;
 	}
 }
