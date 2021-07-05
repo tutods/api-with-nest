@@ -39,10 +39,11 @@ export class CoursesController {
 
 	@Post()
 	create(@Body() createCourseDto: CreateCourseDto, @Res() response) {
-		this.coursesService.create(createCourseDto);
+		const result = this.coursesService.create(createCourseDto);
 
 		return response.status(201).json({
-			message: 'Course added with success!'
+			message: 'Course added with success!',
+			course: result
 		});
 	}
 
@@ -52,10 +53,11 @@ export class CoursesController {
 		@Param('id') id: string,
 		@Res() response
 	) {
-		this.coursesService.update(id, updateCourseDto);
+		const result = this.coursesService.update(id, updateCourseDto);
 
 		return response.status(200).json({
-			message: `Course with id ${id} updated with success!`
+			message: `Course with id ${id} updated with success!`,
+			course: result
 		});
 	}
 
