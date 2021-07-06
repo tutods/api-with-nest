@@ -57,7 +57,7 @@ yarn
 npm run start
 
 # watch mode
-npm run sdev
+npm run dev
 
 # production mode
 npm run start:prod

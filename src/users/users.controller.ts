@@ -16,9 +16,9 @@ export class UsersController {
 	@Patch(':id')
 	@HttpCode(200)
 	async findOneAndUpdate(
-		@Body() UpdateUserDto: UpdateUserDto,
+		@Body() updateUserDto: UpdateUserDto,
 		@Param('id', ParseUUIDPipe) id: string
 	) {
-		return await this.usersService.update(id, UpdateUserDto);
+		return await this.usersService.update(id, updateUserDto);
 	}
 }
