@@ -2,6 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateCourseDto } from './dto/create-course.dto';
+import { UpdateCourseDto } from './dto/update-course.dto';
 import { Course } from './entities/course.entity';
 
 @Injectable()
@@ -45,15 +46,18 @@ export class CoursesService {
 			);
 		}
 
-		return course;
+		return {
+			message: 'Course created successfully!',
+			course
+		};
 	}
 
-	async update(id: string, updateCourseDto: any) {
+	async update(id: string, updateCourseDto: UpdateCourseDto) {
 		const course = await this.repository.findOne(id);
 
 		if (!course) {
 			throw new HttpException(
-				`Course with id ${id} not found`,
+				`Course with id ${id} not found!`,
 				HttpStatus.NOT_FOUND
 			);
 		}
@@ -67,7 +71,10 @@ export class CoursesService {
 			);
 		}
 
-		return course;
+		return {
+			message: `Course with id ${id} updated successfully!`,
+			course
+		};
 	}
 
 	async remove(id: string) {
@@ -80,8 +87,18 @@ export class CoursesService {
 			);
 		}
 
-		await this.repository.remove(course);
+		try {
+			await this.repository.remove(course);
+		} catch (error) {
+			throw new HttpException(
+				`Occurred an error on deleting course with id ${id}!`,
+				HttpStatus.BAD_REQUEST
+			);
+		}
 
-		return HttpStatus.NO_CONTENT;
+		return {
+			message: `Course with id ${id} dleted successfully!`,
+			course
+		};
 	}
 }
