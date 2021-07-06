@@ -1,10 +1,15 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import {
+	HttpException,
+	HttpStatus,
+	Injectable,
+	NotFoundException
+} from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { InjectRepository } from '@nestjs/typeorm';
-import * as bcrypt from 'bcrypt';
 import { classToClass } from 'class-transformer';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
 
 @Injectable()
@@ -27,14 +32,16 @@ export class UsersService {
 			);
 		}
 
-		const saltOrRounds = Number(this.configService.get('SALT'));
+		// const saltOrRounds = Number(this.configService.get('SALT'));
 
-		createUserDto.password = await bcrypt.hash(
-			createUserDto.password,
-			saltOrRounds
-		);
+		// createUserDto.password = await bcrypt.hash(
+		// 	createUserDto.password,
+		// 	saltOrRounds
+		// );
 
 		const user = this.repository.create(createUserDto);
+
+		console.log(user);
 
 		try {
 			await this.repository.save(user);
@@ -48,6 +55,28 @@ export class UsersService {
 		return {
 			message: 'User created successfully!',
 			user: classToClass(user)
+		};
+	}
+
+	async update(id: string, updateUserDto: UpdateUserDto) {
+		const user = await this.repository.preload({ id, ...updateUserDto });
+
+		if (!user) {
+			throw new NotFoundException(`User with ID ${id} does not exist`);
+		}
+
+		try {
+			await this.repository.save(user);
+		} catch (error) {
+			throw new HttpException(
+				'Occurred an error updating user!',
+				HttpStatus.BAD_REQUEST
+			);
+		}
+
+		return {
+			message: 'User updated successfully!',
+			user
 		};
 	}
 }

@@ -67,13 +67,13 @@ npm run start:prod
 
 ```bash
 # unit tests
-$ npm run test
+npm run test
 
 # e2e tests
-$ npm run test:e2e
+npm run test:e2e
 
 # test coverage
-$ npm run test:cov
+npm run test:cov
 ```
 
 <br />
@@ -83,7 +83,8 @@ $ npm run test:cov
 I implemented some changes when following the [Mini Course of **Jorge Aluizio**](https://www.youtube.com/c/JorgeAluizio/videos).
 
 -   [x] Add `ParseUUIDPipe` on route parameters to validate if `id` is an `uuid`;
--   [x] Add `throws` on service to show errors when ocurred;
+-   [x] Add `throws` on service to show errors when occurred;
+-   [x] Add `bcrypt` to _hash_ password on register/creating a new user;
 
 <br />
 
