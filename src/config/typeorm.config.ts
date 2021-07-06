@@ -11,7 +11,7 @@ export default class TypeOrmConfig {
 
 			host: configService.get('DB_HOST') || 'localhost',
 
-			port: parseInt(configService.get('DB_PORT')) || 5432,
+			port: Number(configService.get('DB_PORT')) || 5432,
 
 			username: configService.get('DB_USER'),
 

@@ -1,7 +1,7 @@
 import { IsNotEmpty, IsString } from 'class-validator';
 
 export class CreateCourseDto {
-	@IsNotEmpty({ message: 'The course should have a title!' })
+	@IsNotEmpty({ message: 'The course should have a name!' })
 	@IsString({ message: 'Name needs to be a string!' })
 	readonly name: string;
 
