@@ -1,4 +1,9 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import {
+	HttpException,
+	HttpStatus,
+	Injectable,
+	NotFoundException
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateCourseDto } from './dto/create-course.dto';
@@ -25,10 +30,7 @@ export class CoursesService {
 		const course = await this.repository.findOne(id);
 
 		if (!course) {
-			throw new HttpException(
-				`Course ${id} not found`,
-				HttpStatus.NOT_FOUND
-			);
+			throw new NotFoundException(`Course ${id} not found`);
 		}
 
 		return course;
@@ -53,17 +55,17 @@ export class CoursesService {
 	}
 
 	async update(id: string, updateCourseDto: UpdateCourseDto) {
-		const course = await this.repository.findOne(id);
+		const course = await this.repository.preload({
+			id,
+			...updateCourseDto
+		});
 
 		if (!course) {
-			throw new HttpException(
-				`Course with id ${id} not found!`,
-				HttpStatus.NOT_FOUND
-			);
+			throw new NotFoundException(`Course with id ${id} not found!`);
 		}
 
 		try {
-			await this.repository.update({ id }, updateCourseDto);
+			await this.repository.save(course);
 		} catch (error) {
 			throw new HttpException(
 				`Error updating course with id ${id}!`,
@@ -81,10 +83,7 @@ export class CoursesService {
 		const course = await this.repository.findOne(id);
 
 		if (!course) {
-			throw new HttpException(
-				`Course with id ${id} not exists!`,
-				HttpStatus.NOT_FOUND
-			);
+			throw new NotFoundException(`Course with id ${id} not exists!`);
 		}
 
 		try {
@@ -97,7 +96,7 @@ export class CoursesService {
 		}
 
 		return {
-			message: `Course with id ${id} dleted successfully!`,
+			message: `Course with id ${id} deleted successfully!`,
 			course
 		};
 	}

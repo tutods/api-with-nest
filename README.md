@@ -1,51 +1,69 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
-</p>
+<div align="center"><a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="150" alt="Nest" /></a></div>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+<h1 align="center"><strong>API</strong> using <strong>NestJS</strong></h1>
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+<div align="center">
+  	<a href="#">
+  		<img src="https://img.shields.io/badge/NodeJS%20-%2320232a.svg?&style=for-the-badge&logo=node.js&logoColor=339933" alt="NodeJS"/>
+	</a>
+  	<a href="#">
+  		<img src="https://img.shields.io/badge/NestJs%20-%2320232a.svg?&style=for-the-badge&logo=nestjs&logoColor=E0234E" alt="NestJS"/>
+	</a>
+	<a href="#">
+		<img src="https://img.shields.io/badge/typescript%20-%23007ACC.svg?&style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript" />
+	</a>
+  	<a href="#">
+  		<img src="https://img.shields.io/badge/PostgreSQL%20-4169E1.svg?&style=for-the-badge&logo=postgresql&logoColor=FFFFFF" alt="PostgreSQL" />
+	</a>
+	<a href="#">
+		<img src="https://img.shields.io/badge/Visual_Studio_Code-0078D4?style=for-the-badge&logo=visual%20studio%20code&logoColor=white" alt="VS Code" />
+	</a>
+	<a href="https://github.com/TutoDS/api-with-nest/stargazers">
+    	<img alt="Stargazers" src="https://img.shields.io/github/stars/TutoDS/api-with-nest?style=for-the-badge">
+	</a>
+</div>
 
-## Description
+<br />
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## 📦 Requirements
 
-## Installation
+To run this project you need:
+
+-   **NodeJS**<span style="color:red">\*</span>;
+-   **Yarn** <small>(I prefer Yarn to NPM, but is not required)</small>;
+-   **PostgreSQL**<span style="color:red">\*</span>;
+-   **Visual Studio Code** or your favorite **IDE**;
+
+<h4 style="font-weight:500;text-transform:uppercase;"><span style="color:red">*</span> - required</h4>
+
+<br />
+
+## 🚀 How to run this project
+
+### **Install Dependencies**
 
 ```bash
-$ npm install
+# with npm
+npm install
+
+# with yarn
+yarn
 ```
 
-## Running the app
+### **Running the app**
 
 ```bash
 # development
-$ npm run start
+npm run start
 
 # watch mode
-$ npm run start:dev
+npm run sdev
 
 # production mode
-$ npm run start:prod
+npm run start:prod
 ```
 
-## Test
+### **Run Tests**
 
 ```bash
 # unit tests
@@ -58,18 +76,11 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
-## Support
+<br />
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+## 📹 Videos
 
-## Stay in touch
+To create this project and test the **NestJS** I follow this vídeos:
 
--   Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
--   Website - [https://nestjs.com](https://nestjs.com/)
--   Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
-
-**Video about TypeORM config with `.env` vars:** https://www.youtube.com/watch?v=aDlBnxVzS_Q
+-   [Mini Course of **Jorge Aluizio**](https://www.youtube.com/c/JorgeAluizio/videos)
+-   [TypeORM with `.env` vars](https://www.youtube.com/watch?v=aDlBnxVzS_Q&t=3s)
