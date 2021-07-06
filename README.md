@@ -85,6 +85,7 @@ I implemented some changes when following the [Mini Course of **Jorge Aluizio**]
 -   [x] Add `ParseUUIDPipe` on route parameters to validate if `id` is an `uuid`;
 -   [x] Add `throws` on service to show errors when occurred;
 -   [x] Add `bcrypt` to _hash_ password on register/creating a new user;
+-   [x] Add method to update user and hash a new password;
 
 <br />
 
