@@ -78,6 +78,15 @@ $ npm run test:cov
 
 <br />
 
+## ✅ Changes I Made
+
+I implemented some changes when following the [Mini Course of **Jorge Aluizio**](https://www.youtube.com/c/JorgeAluizio/videos).
+
+-   [x] Add `ParseUUIDPipe` on route parameters to validate if `id` is an `uuid`;
+-   [x] Add `throws` on service to show errors when ocurred;
+
+<br />
+
 ## 📹 Videos
 
 To create this project and test the **NestJS** I follow this vídeos:
