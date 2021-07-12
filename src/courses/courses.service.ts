@@ -9,12 +9,16 @@ import { Repository } from 'typeorm';
 import { CreateCourseDto } from './dto/create-course.dto';
 import { UpdateCourseDto } from './dto/update-course.dto';
 import { Course } from './entities/course.entity';
+import { Tag } from './entities/tag.entity';
 
 @Injectable()
 export class CoursesService {
 	constructor(
 		@InjectRepository(Course)
-		private repository: Repository<Course>
+		private repository: Repository<Course>,
+
+		@InjectRepository(Tag)
+		private readonly tagRepository: Repository<Tag>
 	) {}
 
 	async findAll() {
@@ -37,7 +41,14 @@ export class CoursesService {
 	}
 
 	async create(createCourseDto: CreateCourseDto) {
-		const course = this.repository.create(createCourseDto);
+		const tags = await Promise.all(
+			createCourseDto.tags.map((tag) => this.preloadTagByName(tag))
+		);
+
+		const course = this.repository.create({
+			...createCourseDto,
+			tags
+		});
 
 		try {
 			await this.repository.save(course);
@@ -55,9 +66,16 @@ export class CoursesService {
 	}
 
 	async update(id: string, updateCourseDto: UpdateCourseDto) {
+		const tags =
+			updateCourseDto.tags &&
+			(await Promise.all(
+				updateCourseDto.tags.map((tag) => this.preloadTagByName(tag))
+			));
+
 		const course = await this.repository.preload({
 			id,
-			...updateCourseDto
+			...updateCourseDto,
+			tags
 		});
 
 		if (!course) {
@@ -99,5 +117,15 @@ export class CoursesService {
 			message: `Course with id ${id} deleted successfully!`,
 			course
 		};
+	}
+
+	private async preloadTagByName(name: string): Promise<Tag> {
+		const tag = await this.tagRepository.findOne({ name });
+
+		if (tag) {
+			return tag;
+		}
+
+		return this.tagRepository.create({ name });
 	}
 }

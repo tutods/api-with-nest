@@ -4,7 +4,6 @@ import {
 	Injectable,
 	NotFoundException
 } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
 import { InjectRepository } from '@nestjs/typeorm';
 import { classToClass } from 'class-transformer';
 import { Repository } from 'typeorm';
@@ -16,8 +15,7 @@ import { User } from './entities/user.entity';
 export class UsersService {
 	constructor(
 		@InjectRepository(User)
-		private repository: Repository<User>,
-		private configService: ConfigService
+		private repository: Repository<User>
 	) {}
 
 	async create(createUserDto: CreateUserDto) {
@@ -31,13 +29,6 @@ export class UsersService {
 				HttpStatus.BAD_REQUEST
 			);
 		}
-
-		// const saltOrRounds = Number(this.configService.get('SALT'));
-
-		// createUserDto.password = await bcrypt.hash(
-		// 	createUserDto.password,
-		// 	saltOrRounds
-		// );
 
 		const user = this.repository.create(createUserDto);
 
