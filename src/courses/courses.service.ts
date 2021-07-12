@@ -22,7 +22,7 @@ export class CoursesService {
 	) {}
 
 	async findAll() {
-		const results = await this.repository.find();
+		const results = await this.repository.find({ relations: ['tags'] });
 
 		return {
 			numberOfCourses: results.length,
@@ -31,7 +31,9 @@ export class CoursesService {
 	}
 
 	async findOne(id: string) {
-		const course = await this.repository.findOne(id);
+		const course = await this.repository.findOne(id, {
+			relations: ['tags']
+		});
 
 		if (!course) {
 			throw new NotFoundException(`Course ${id} not found`);
